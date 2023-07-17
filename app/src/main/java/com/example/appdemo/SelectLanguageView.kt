@@ -1,6 +1,7 @@
 package com.example.appdemo
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -38,8 +39,8 @@ import com.example.appdemo.databinding.SelectLanguageBinding
  *     app:x_backgroundItem="@drawable/language_item_background"
  *     app:x_backgroundItem_selected="@drawable/language_item_background_selected"
  *     app:x_background="@color/white"
- *     app:x_titleItemStyle="@style/ItemLanguage_Normal"
- *     app:x_titleItemStyle_selected="@style/ItemLanguage_Selected"
+ *     app:x_titleItemStyle="@style/TextTitle_Normal"
+ *     app:x_titleItemStyle_selected="@style/TextTitle_Selected"
  *     app:x_listLanguage="LIST_12_LANGUAGE"
  *     app:x_positionSelected="0" />
  * ```
@@ -58,8 +59,16 @@ class SelectLanguageView @JvmOverloads constructor(
 
     private var background: Drawable? = null
 
-    private var styleTitle = R.style.ItemLanguage_Normal
-    private var styleTitleSelected = R.style.ItemLanguage_Selected
+    private var styleTitle = R.style.TextTitle_Normal
+    private var styleTitleSelected = R.style.TextTitle_Selected
+
+    private var styleBottomAction = R.style.XToolbar_Bottom
+    private var colorBottomAction = Color.WHITE
+    private var backgroundBottomAction: Drawable? = null
+    private var showBottomAction = false
+
+    private var style = 0
+    private var styleSelected = 0
 
     private var heightItem = 0
     private var sizeFlag = 0
@@ -100,39 +109,28 @@ class SelectLanguageView @JvmOverloads constructor(
 
                 background = getDrawable(R.styleable.SelectLanguageView_x_background)
 
-                styleTitle =
-                    getResourceId(
-                        R.styleable.SelectLanguageView_x_titleItemStyle,
-                        styleTitle
-                    )
-                styleTitleSelected =
-                    getResourceId(
-                        R.styleable.SelectLanguageView_x_titleItemStyle_selected,
-                        styleTitleSelected
-                    )
+                styleTitle = getResourceId(R.styleable.SelectLanguageView_x_titleItemStyle, styleTitle)
+                styleTitleSelected = getResourceId(R.styleable.SelectLanguageView_x_titleItemStyle_selected, styleTitleSelected)
 
-                typeListLanguage = TypeLanguage.fromId(
-                    getInt(
-                        R.styleable.SelectLanguageView_x_listLanguage,
-                        typeListLanguage.id
-                    )
-                )
+                style = getResourceId(R.styleable.SelectLanguageView_x_itemStyle, style)
+                styleSelected = getResourceId(R.styleable.SelectLanguageView_x_itemStyle_selected, styleSelected)
 
-                gravityAds = GravityAds.fromId(
-                    getInt(
-                        R.styleable.SelectLanguageView_x_gravityAds,
-                        gravityAds.id
-                    )
-                )
+                typeListLanguage = TypeLanguage.fromId(getInt(R.styleable.SelectLanguageView_x_listLanguage, typeListLanguage.id))
+
+                gravityAds = GravityAds.fromId(getInt(R.styleable.SelectLanguageView_x_gravityAds, gravityAds.id))
 
                 heightItem = getDimensionPixelSize(R.styleable.SelectLanguageView_x_heightItem, heightItem)
-
                 sizeFlag = getDimensionPixelSize(R.styleable.SelectLanguageView_x_sizeFlag, sizeFlag)
 
                 column = getInt(R.styleable.SelectLanguageView_x_column, column)
 
-                positionSelected =
-                    getInt(R.styleable.SelectLanguageView_x_positionSelected, positionSelected)
+                positionSelected = getInt(R.styleable.SelectLanguageView_x_positionSelected, positionSelected)
+
+                backgroundBottomAction = getDrawable(R.styleable.SelectLanguageView_x_backgroundBottomAction)
+                colorBottomAction = getColor(R.styleable.SelectLanguageView_x_colorTitleBottomAction, colorBottomAction)
+                styleBottomAction = getResourceId(R.styleable.SelectLanguageView_x_bottomActionStyle, styleBottomAction)
+                showBottomAction = getBoolean(R.styleable.SelectLanguageView_x_canShowBottomAction, showBottomAction)
+
             }
         }
 
@@ -145,6 +143,16 @@ class SelectLanguageView @JvmOverloads constructor(
     private fun setupViews() {
         setupConfigDefault()
 
+        _binding.btnBottomAction.apply {
+            if (showBottomAction) visible() else gone()
+            if (backgroundBottomAction != null) {
+                background = backgroundBottomAction
+            }
+
+            setTextAppearance(styleBottomAction)
+            setTextColor(colorBottomAction)
+        }
+
         languageAdapter.apply {
             _binding.rvLanguage.layoutManager = GridLayoutManager(context, column)
             _binding.rvLanguage.adapter = this
@@ -152,6 +160,7 @@ class SelectLanguageView @JvmOverloads constructor(
             submitList(getLanguageList())
             setBackgroundItem(backgroundItem, backgroundItemSelected)
             setStyleTextAppearance(styleTitle, styleTitleSelected)
+            setStyleItem(style, styleSelected)
             setPositionSelected(positionSelected)
             setHeightItem(heightItem)
             setSizeFlag(sizeFlag)
@@ -165,24 +174,6 @@ class SelectLanguageView @JvmOverloads constructor(
      */
     fun onChangeLanguageListener(languageCode: (String) -> Unit) {
         itemLanguage = languageCode
-    }
-
-    /**
-     * Sets the toolbar listener for left and right button clicks.
-     *
-     * @param clickLeft The callback function to be invoked when the left button is clicked.
-     * @param clickRight The callback function to be invoked when the right button is clicked.
-     */
-    fun setToolbarListener(clickLeft: () -> Unit, clickRight: () -> Unit) {
-        _binding.xToolbar.setToolbarClickListener(
-            clickLeft = {
-                clickLeft.invoke()
-            },
-            clickRight = {
-                clickRight.invoke()
-            }
-
-        )
     }
 
     /**
@@ -202,7 +193,6 @@ class SelectLanguageView @JvmOverloads constructor(
      * @param background The background drawable to be set.
      */
     override fun setBackground(background: Drawable?) {
-        _binding.xToolbar.setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
         _binding.root.background = background
     }
 
@@ -210,6 +200,7 @@ class SelectLanguageView @JvmOverloads constructor(
      * Sets up the default configuration if custom values are not provided.
      */
     private fun setupConfigDefault() {
+        setListLanguageCustom(listOf())
         if (background == null) {
             background = ContextCompat.getDrawable(context, R.color.white)
         }
@@ -222,6 +213,7 @@ class SelectLanguageView @JvmOverloads constructor(
             backgroundItemSelected =
                 ContextCompat.getDrawable(context, R.drawable.background_language_selector)
         }
+
     }
 
     /**
@@ -242,6 +234,12 @@ class SelectLanguageView @JvmOverloads constructor(
         return when (gravityAds) {
             GravityAds.BOTTOM -> _binding.flAdsBottom
             GravityAds.TOP -> _binding.flAdsTop
+        }
+    }
+
+    fun setBottomActionClickListener(onBottomAction: () -> Unit) {
+        _binding.btnBottomAction.setOnClickListener {
+            onBottomAction.invoke()
         }
     }
 

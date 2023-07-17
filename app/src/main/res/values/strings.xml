@@ -14,4 +14,7 @@
     <string name="language_italian">Italian</string>
     <string name="language_korean">Korean</string>
 
+    <string name="apply">Apply</string>
+    <string name="next">Next</string>
+
 </resources>
