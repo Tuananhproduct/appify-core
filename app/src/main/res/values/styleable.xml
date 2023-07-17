@@ -4,6 +4,7 @@
     <declare-styleable name="XToolbar">
         <attr name="xtb_title" format="string" />
         <attr name="xtb_colorTitle" format="color" />
+        <attr name="xtb_titleStyle" format="reference" />
 
         <attr name="xtb_visibilityTitle" format="integer">
             <flag name="visible" value="0" />
@@ -29,11 +30,14 @@
             <flag name="end" value="0x00800005" />
         </attr>
 
-        <attr name="xtb_titleStyle" format="integer" />
-
         <attr name="xtb_iconRight" format="reference" />
         <attr name="xtb_iconLeft" format="reference" />
         <attr name="xtb_background" format="color" />
+
+        <attr name="xtb_textRight" format="string" />
+        <attr name="xtb_backgroundRight" format="reference" />
+        <attr name="xtb_colorTextRight" format="color" />
+        <attr name="xtb_textRightStyle" format="reference" />
 
         <attr name="xtb_cardElevation" format="dimension" />
         <attr name="xtb_canShowLine" format="boolean" />
@@ -41,30 +45,84 @@
     </declare-styleable>
 
     <declare-styleable name="SelectLanguageView">
-        <attr name="x_backgroundItem_selected" format="reference" />
-        <attr name="x_backgroundItem" format="reference" />
+        <attr name="sl_backgroundItem_selected" format="reference" />
+        <attr name="sl_backgroundItem" format="reference" />
 
-        <attr name="x_titleItemStyle" format="reference" />
-        <attr name="x_titleItemStyle_selected" format="reference" />
+        <attr name="sl_titleItemStyle" format="reference" />
+        <attr name="sl_titleItemStyle_selected" format="reference" />
 
-        <attr name="x_positionSelected" format="integer" />
+        <attr name="sl_itemStyle" format="reference" />
+        <attr name="sl_itemStyle_selected" format="reference" />
 
-        <attr name="x_background" format="reference" />
-        <attr name="x_heightItem" format="dimension" />
-        <attr name="x_sizeFlag" format="dimension" />
-        <attr name="x_column" format="integer" />
+        <attr name="sl_positionSelected" format="integer" />
 
-        <attr name="x_listLanguage" format="integer">
-            <flag name="custom" value="3" />
+        <attr name="sl_background" format="reference" />
+        <attr name="sl_heightItem" format="dimension" />
+        <attr name="sl_sizeFlag" format="dimension" />
+
+        <attr name="sl_column" format="integer" />
+
+        <attr name="sl_backgroundBottomAction" format="reference" />
+        <attr name="sl_colorTitleBottomAction" format="color" />
+        <attr name="sl_bottomActionStyle" format="reference" />
+        <attr name="sl_canShowBottomAction" format="boolean" />
+
+        <attr name="sl_listLanguage" format="integer">
+            <flag name="list_custom" value="3" />
             <flag name="list_6_language" value="6" />
             <flag name="list_12_language" value="12" />
         </attr>
 
-        <attr name="x_gravityAds" format="integer">
+        <attr name="sl_gravityAds" format="integer">
             <flag name="top" value="2" />
             <flag name="bottom" value="4" />
         </attr>
 
+
+    </declare-styleable>
+
+    <declare-styleable name="IntroView">
+        <attr name="iv_layout_id_1" format="reference" />
+        <attr name="iv_layout_id_2" format="reference" />
+        <attr name="iv_layout_id_3" format="reference" />
+
+        <attr name="iv_background" format="reference" />
+
+        <attr name="iv_backgroundNext" format="reference" />
+        <attr name="iv_nextStyle" format="reference" />
+        <attr name="iv_nextTextColor" format="color" />
+        <attr name="iv_nextIcon" format="reference" />
+
+        <attr name="iv_dotsColor" format="color" />
+        <attr name="iv_selectedDotsColor" format="color" />
+        <attr name="iv_dotsShape" format="integer">
+            <flag name="pill" value="4" />
+            <flag name="circle" value="8" />
+        </attr>
+
+        <attr name="iv_gravityAction_normal" format="integer">
+            <flag name="top" value="1" />
+            <flag name="bottom" value="3" />
+        </attr>
+
+        <attr name="iv_gravityAction_corner" format="integer">
+            <flag name="top" value="1" />
+            <flag name="bottom" value="3" />
+        </attr>
+
+        <attr name="iv_gravityAction_center" format="integer">
+            <flag name="bottom" value="3" />
+        </attr>
+
+        <attr name="iv_gravityAction_icon" format="integer">
+            <flag name="top" value="1" />
+            <flag name="bottom" value="3" />
+        </attr>
+
+        <attr name="iv_gravityAds" format="integer">
+            <flag name="middle" value="2" />
+            <flag name="bottom" value="6" />
+        </attr>
 
     </declare-styleable>
 </resources>

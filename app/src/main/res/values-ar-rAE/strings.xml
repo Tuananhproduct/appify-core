@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_english">الإنجليزية</string>
+    <string name="language_hindi">الهندية</string>
+    <string name="language_spanish">الإسبانية</string>
+    <string name="language_french">الفرنسية</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_bengali">البنغالية</string>
+    <string name="language_russian">الروسية</string>
+    <string name="language_portuguese">البرتغالية</string>
+    <string name="language_indonesian">الإندونيسية</string>
+    <string name="language_german">الألمانية</string>
+    <string name="language_italian">الإيطالية</string>
+    <string name="language_korean">الكورية</string>
+
+    <string name="apply">تطبيق</string>
+    <string name="next">التالي</string>
+</resources>

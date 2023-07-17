@@ -5,36 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.appdemo.XToolbar
-        android:id="@+id/x_toolbar"
-        app:xtb_cardElevation="0dp"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_bottom_action"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/fl_ads_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_language"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="12dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/fl_ads_top"
+                app:spanCount="1"
+                tools:listitem="@layout/item_language" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/btn_bottom_action"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_item"
+        android:layout_marginHorizontal="72dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/background_language_selector"
+        android:gravity="center"
+        android:visibility="visible"
+        style="@style/XToolbar.Bottom"
+        android:text="@string/apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:xtb_gravityTitle="start"
-        android:background="@color/black"
-        app:xtb_iconLeft="@drawable/ic_back"
-        app:xtb_title="Toolbar Example" />
-
-    <FrameLayout
-        android:id="@+id/fl_ads_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/x_toolbar" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_language"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="12dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/fl_ads_bottom"
-        app:layout_constraintTop_toBottomOf="@id/fl_ads_top"
-        app:spanCount="1"
-        tools:listitem="@layout/item_language" />
+        app:layout_constraintBottom_toTopOf="@id/fl_ads_bottom"/>
 
     <FrameLayout
         android:id="@+id/fl_ads_bottom"

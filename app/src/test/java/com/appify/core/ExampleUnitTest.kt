@@ -1,4 +1,4 @@
-package com.example.appdemo
+package com.appify.core
 
 import org.junit.Test
 

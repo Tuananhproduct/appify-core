@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">AppDemo</string>
-
     <string name="language_english">English</string>
     <string name="language_hindi">Hindi</string>
     <string name="language_spanish">Spanish</string>
@@ -13,5 +11,8 @@
     <string name="language_german">German</string>
     <string name="language_italian">Italian</string>
     <string name="language_korean">Korean</string>
+
+    <string name="apply">Apply</string>
+    <string name="next">Next</string>
 
 </resources>

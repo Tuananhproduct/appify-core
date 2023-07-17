@@ -1,7 +1,8 @@
-package com.example.appdemo
+package com.appify.core.language
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.appify.core.R
 
 class LanguageSelector : AppCompatActivity() {
 
