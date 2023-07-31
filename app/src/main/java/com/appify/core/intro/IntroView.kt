@@ -203,9 +203,9 @@ class IntroView @JvmOverloads constructor(
 
         _binding.vgIntro.apply {
             adapter = introViewPagerAdapter
-            _binding.indicatorBottom.attachTo(this)
-            _binding.indicatorTop.attachTo(this)
-            _binding.indicatorCenter.attachTo(this)
+//            _binding.indicatorBottom.attachTo(this)
+//            _binding.indicatorTop.attachTo(this)
+//            _binding.indicatorCenter.attachTo(this)
         }
 
         introViewPagerAdapter?.submitList(getListFragment())
@@ -272,15 +272,15 @@ class IntroView @JvmOverloads constructor(
     private fun setupDotsShape() {
         when (dotsShape) {
             DotsShape.PILL.id -> {
-                _binding.indicatorBottom.setWithFactor(DefaultValues.PILL)
-                _binding.indicatorTop.setWithFactor(DefaultValues.PILL)
-                _binding.indicatorCenter.setWithFactor(DefaultValues.PILL)
+//                _binding.indicatorBottom.setWithFactor(DefaultValues.PILL)
+////                _binding.indicatorTop.setWithFactor(DefaultValues.PILL)
+//                _binding.indicatorCenter.setWithFactor(DefaultValues.PILL)
             }
 
             DotsShape.CIRCLE.id -> {
-                _binding.indicatorBottom.setWithFactor(DefaultValues.CIRCLE)
-                _binding.indicatorTop.setWithFactor(DefaultValues.CIRCLE)
-                _binding.indicatorCenter.setWithFactor(DefaultValues.CIRCLE)
+//                _binding.indicatorBottom.setWithFactor(DefaultValues.CIRCLE)
+//                _binding.indicatorTop.setWithFactor(DefaultValues.CIRCLE)
+//                _binding.indicatorCenter.setWithFactor(DefaultValues.CIRCLE)
             }
         }
     }
@@ -289,13 +289,13 @@ class IntroView @JvmOverloads constructor(
      * Sets up the color of the dots indicator based on the provided dotsColor and selectedDotsColor values.
      */
     private fun setupDotsColor() {
-        _binding.indicatorCenter.dotsColor = dotsColor
-        _binding.indicatorBottom.dotsColor = dotsColor
-        _binding.indicatorTop.dotsColor = dotsColor
-
-        _binding.indicatorCenter.selectedDotColor = selectedDotsColor
-        _binding.indicatorBottom.selectedDotColor = selectedDotsColor
-        _binding.indicatorTop.selectedDotColor = selectedDotsColor
+//        _binding.indicatorCenter.dotsColor = dotsColor
+//        _binding.indicatorBottom.dotsColor = dotsColor
+//        _binding.indicatorTop.dotsColor = dotsColor
+//
+//        _binding.indicatorCenter.selectedDotColor = selectedDotsColor
+//        _binding.indicatorBottom.selectedDotColor = selectedDotsColor
+//        _binding.indicatorTop.selectedDotColor = selectedDotsColor
     }
 
     /**
