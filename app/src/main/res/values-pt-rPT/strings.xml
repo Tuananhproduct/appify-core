@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_english">Inglês</string>
+    <string name="language_hindi">Híndi</string>
+    <string name="language_spanish">Espanhol</string>
+    <string name="language_french">Francês</string>
+    <string name="language_arabic">Árabe</string>
+    <string name="language_bengali">Bengali</string>
+    <string name="language_russian">Russo</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_indonesian">Indonésio</string>
+    <string name="language_german">Alemão</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_korean">Coreano</string>
+
+    <string name="apply">Aplicar</string>
+    <string name="next">Próximo</string>
+</resources>

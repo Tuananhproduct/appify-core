@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_english">ইংরেজি</string>
+    <string name="language_hindi">হিন্দি</string>
+    <string name="language_spanish">স্প্যানিশ</string>
+    <string name="language_french">ফরাসি</string>
+    <string name="language_arabic">আরবি</string>
+    <string name="language_bengali">বাংলা</string>
+    <string name="language_russian">রাশিয়ান</string>
+    <string name="language_portuguese">পর্তুগিজ</string>
+    <string name="language_indonesian">ইন্দোনেশিয়ান</string>
+    <string name="language_german">জার্মান</string>
+    <string name="language_italian">ইতালিয়ান</string>
+    <string name="language_korean">কোরিয়ান</string>
+
+    <string name="apply">প্রয়োগ</string>
+    <string name="next">পরবর্তী</string>
+</resources>
