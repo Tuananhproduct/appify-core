@@ -47,4 +47,6 @@ fun Context.followLanguageSelected() {
     val configuration = resources.configuration
     configuration.setLocale(locale)
     resources.updateConfiguration(configuration, resources.displayMetrics)
+
+
 }

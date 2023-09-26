@@ -8,7 +8,7 @@ class LanguageSelector : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.select_language)
+        setContentView(R.layout.layout_language)
     }
 
 }

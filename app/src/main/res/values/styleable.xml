@@ -44,36 +44,36 @@
 
     </declare-styleable>
 
-    <declare-styleable name="SelectLanguageView">
-        <attr name="sl_backgroundItem_selected" format="reference" />
-        <attr name="sl_backgroundItem" format="reference" />
+    <declare-styleable name="LanguageView">
+        <attr name="lv_backgroundItem_selected" format="reference" />
+        <attr name="lv_backgroundItem" format="reference" />
 
-        <attr name="sl_titleItemStyle" format="reference" />
-        <attr name="sl_titleItemStyle_selected" format="reference" />
+        <attr name="lv_titleItemStyle" format="reference" />
+        <attr name="lv_titleItemStyle_selected" format="reference" />
 
-        <attr name="sl_itemStyle" format="reference" />
-        <attr name="sl_itemStyle_selected" format="reference" />
+        <attr name="lv_itemStyle" format="reference" />
+        <attr name="lv_itemStyle_selected" format="reference" />
 
-        <attr name="sl_positionSelected" format="integer" />
+        <attr name="lv_positionSelected" format="integer" />
 
-        <attr name="sl_background" format="reference" />
-        <attr name="sl_heightItem" format="dimension" />
-        <attr name="sl_sizeFlag" format="dimension" />
+        <attr name="lv_background" format="reference" />
+        <attr name="lv_heightItem" format="dimension" />
+        <attr name="lv_sizeFlag" format="dimension" />
 
-        <attr name="sl_column" format="integer" />
+        <attr name="lv_column" format="integer" />
 
-        <attr name="sl_backgroundBottomAction" format="reference" />
-        <attr name="sl_colorTitleBottomAction" format="color" />
-        <attr name="sl_bottomActionStyle" format="reference" />
-        <attr name="sl_canShowBottomAction" format="boolean" />
+        <attr name="lv_backgroundBottomAction" format="reference" />
+        <attr name="lv_colorTitleBottomAction" format="color" />
+        <attr name="lv_bottomActionStyle" format="reference" />
+        <attr name="lv_canShowBottomAction" format="boolean" />
 
-        <attr name="sl_listLanguage" format="integer">
+        <attr name="lv_listLanguage" format="integer">
             <flag name="list_custom" value="3" />
             <flag name="list_6_language" value="6" />
             <flag name="list_12_language" value="12" />
         </attr>
 
-        <attr name="sl_gravityAds" format="integer">
+        <attr name="lv_gravityAds" format="integer">
             <flag name="top" value="2" />
             <flag name="bottom" value="4" />
         </attr>
@@ -81,7 +81,7 @@
 
     </declare-styleable>
 
-    <declare-styleable name="IntroView">
+    <declare-styleable name="OnboardingView">
         <attr name="iv_layout_id_1" format="reference" />
         <attr name="iv_layout_id_2" format="reference" />
         <attr name="iv_layout_id_3" format="reference" />

@@ -14,6 +14,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.appify.core.DefaultValues
 import com.appify.core.R
 import com.appify.core.databinding.ItemLanguageBinding
 import com.appify.core.gone
@@ -35,28 +36,28 @@ class TaskDiffCallback : DiffUtil.ItemCallback<ItemLanguage>() {
 class SelectorLanguageAdapter(private val itemClickListener: (String) -> Unit) :
     ListAdapter<ItemLanguage, SelectorLanguageAdapter.SelectorViewHolder>(TaskDiffCallback()) {
 
-    private var currentPositionSelected = 0
+    private var currentPositionSelected = DefaultValues.FIRST_LANGUAGE
 
     private var background: Drawable? = null
     private var backgroundSelected: Drawable? = null
 
     @DimenRes
-    private var heightItem: Int = 0
+    private var heightItem: Int = DefaultValues.EMPTY_VALUE
 
     @DimenRes
-    private var sizeFlag: Int = 0
+    private var sizeFlag: Int = DefaultValues.SIZE_NOT_DETERMINED
 
     @StyleRes
-    private var styleTitle = 0
+    private var styleTitle = DefaultValues.EMPTY_VALUE
 
     @StyleRes
-    private var styleTitleSelected = 0
+    private var styleTitleSelected = DefaultValues.EMPTY_VALUE
 
     @StyleRes
-    private var style = 0
+    private var style = DefaultValues.EMPTY_VALUE
 
     @StyleRes
-    private var styleSelected = 0
+    private var styleSelected = DefaultValues.EMPTY_VALUE
 
 
     class SelectorViewHolder(val binding: ItemLanguageBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -73,7 +74,7 @@ class SelectorLanguageAdapter(private val itemClickListener: (String) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectorViewHolder {
         val binding = ItemLanguageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.root.updateLayoutParams {
-            height = if (heightItem == 0) {
+            height = if (heightItem == DefaultValues.SIZE_NOT_DETERMINED) {
                 parent.context.resources.getDimensionPixelSize(R.dimen.height_item)
             } else {
                 heightItem
@@ -90,7 +91,7 @@ class SelectorLanguageAdapter(private val itemClickListener: (String) -> Unit) :
         val styleTitle = if (isSelected) styleTitleSelected else styleTitle
         val styleItem = if (isSelected) styleSelected else style
 
-        if (styleItem != 0) {
+        if (styleItem != DefaultValues.SIZE_NOT_DETERMINED) {
             with(holder.binding) {
                 txtLanguageStyle.visible()
                 llNormal.gone()

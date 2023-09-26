@@ -18,7 +18,7 @@ import com.appify.core.SharedPref
 import com.appify.core.databinding.LayoutXToolbarBinding
 import com.appify.core.gone
 import com.appify.core.invisible
-import com.appify.core.language.SelectLanguageView
+import com.appify.core.language.LanguageView
 import com.appify.core.setMargins
 import com.appify.core.visible
 
@@ -51,7 +51,7 @@ import com.appify.core.visible
  *
  * Example usage in XML:
  * ```
- * <com.example.XToolbar
+ * <com.appify.core.toolbar.XToolbar
  *     android:id="@+id/toolbar"
  *     android:layout_width="match_parent"
  *     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@ class XToolbar @JvmOverloads constructor(
      * Sets up the background color of the view.
      */
     private fun setupBackground() {
-        _binding.root.setCardBackgroundColor(colorBackground)
+        _binding.cardElevation.setCardBackgroundColor(colorBackground)
     }
 
     /**
@@ -204,10 +204,10 @@ class XToolbar @JvmOverloads constructor(
 
         _binding.title.apply {
             setTitleText(title ?: DefaultValues.EMPTY_STRING)
-            setTitleColor(colorTitle)
             setTitleTextVisible(visibilityTitle)
-            setTitleTextAppearance(styleTitle)
             setGravityTitle(gravityTitle)
+            setTitleTextAppearance(styleTitle)
+            setTitleColor(colorTitle)
         }
     }
 
@@ -220,9 +220,9 @@ class XToolbar @JvmOverloads constructor(
 
     /**
      * Sets up the view with the provided language configurations.
-     * @param viewLanguage The SelectLanguageView to be set up with language configurations.
+     * @param viewLanguage The LanguageView to be set up with language configurations.
      */
-    fun setupWithLanguageView(viewLanguage: SelectLanguageView) {
+    fun setupWithLanguageView(viewLanguage: LanguageView) {
         viewLanguage.onChangeLanguageListener { languageCode ->
             currentLanguageCode = languageCode
         }

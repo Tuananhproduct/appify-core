@@ -8,14 +8,15 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.appify.core.DefaultValues
 import com.appify.core.R
 import com.appify.core.SharedPref
-import com.appify.core.databinding.SelectLanguageBinding
+import com.appify.core.databinding.LayoutLanguageBinding
 import com.appify.core.gone
 import com.appify.core.visible
 
 /**
- * SelectLanguageView is a custom view for selecting a language.
+ * LanguageView is a custom view for selecting a language.
  *
  * This view displays a list of languages and allows the user to select a language. It provides
  * customization options for appearance and behavior through XML attributes. The selected language
@@ -24,7 +25,7 @@ import com.appify.core.visible
  * ads at the top or bottom, depending on the gravityAds setting.
  *
  * Usage:
- * 1. Include the `SelectLanguageView` in your XML layout file.
+ * 1. Include the `LanguageView` in your XML layout file.
  * 2. Customize the appearance and behavior of the view using the available XML attributes.
  * 3. Register a listener for the language change event using [onChangeLanguageListener].
  * 4. Set a custom list of languages using [setListLanguageCustom] if needed.
@@ -32,7 +33,7 @@ import com.appify.core.visible
  *
  * - x_backgroundItem: Background drawable for each language item.
  * - x_backgroundItem_selected: Background drawable for the selected language item.
- * - x_background: Background drawable for the SelectLanguageView.
+ * - x_background: Background drawable for the LanguageView.
  * - x_titleItemStyle: Style resource for the language item title when not selected.
  * - x_titleItemStyle_selected: Style resource for the language item title when selected.
  * - x_listLanguage: Type of language list to display (12 languages, 6 languages, or custom list).
@@ -48,8 +49,8 @@ import com.appify.core.visible
  *
  * Example usage in XML:
  * ```
- * <com.example.SelectLanguageView
- *     android:id="@+id/selectLanguageView"
+ * <com.appify.core.language.LanguageView
+ *     android:id="@+id/LanguageView"
  *     android:layout_width="match_parent"
  *     android:layout_height="wrap_content"
  *     app:x_backgroundItem="@drawable/background_language"
@@ -74,7 +75,7 @@ import com.appify.core.visible
  * @param context The context in which the view is created.
  * @param attributeSet The attribute set containing custom attributes.
  */
-class SelectLanguageView @JvmOverloads constructor(
+class LanguageView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null
 ) : FrameLayout(context, attributeSet) {
@@ -92,15 +93,15 @@ class SelectLanguageView @JvmOverloads constructor(
     private var backgroundBottomAction: Drawable? = null
     private var showBottomAction = false
 
-    private var style = 0
-    private var styleSelected = 0
+    private var style = DefaultValues.EMPTY_VALUE
+    private var styleSelected = DefaultValues.EMPTY_VALUE
 
-    private var heightItem = 0
-    private var sizeFlag = 0
+    private var heightItem = DefaultValues.SIZE_NOT_DETERMINED
+    private var sizeFlag = DefaultValues.SIZE_NOT_DETERMINED
 
-    private var column = 1
+    private var column = DefaultValues.COLUMN
 
-    private var positionSelected = 0
+    private var positionSelected = DefaultValues.FIRST_LANGUAGE
 
     private var typeListLanguage = TypeLanguage.LIST_12_LANGUAGE
 
@@ -110,11 +111,7 @@ class SelectLanguageView @JvmOverloads constructor(
 
     private var listLanguageCustom = mutableListOf<ItemLanguage>()
 
-    private val _binding = SelectLanguageBinding.inflate(
-        LayoutInflater.from(context),
-        this,
-        true
-    )
+    private val _binding = LayoutLanguageBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var itemLanguage: ((String) -> Unit)? = null
 
@@ -126,37 +123,37 @@ class SelectLanguageView @JvmOverloads constructor(
         attributeSet?.let { attrs ->
             context.theme.obtainStyledAttributes(
                 attrs,
-                R.styleable.SelectLanguageView,
+                R.styleable.LanguageView,
                 0,
                 0
             ).apply {
-                backgroundItem = getDrawable(R.styleable.SelectLanguageView_sl_backgroundItem)
+                backgroundItem = getDrawable(R.styleable.LanguageView_lv_backgroundItem)
                 backgroundItemSelected =
-                    getDrawable(R.styleable.SelectLanguageView_sl_backgroundItem_selected)
+                    getDrawable(R.styleable.LanguageView_lv_backgroundItem_selected)
 
-                background = getDrawable(R.styleable.SelectLanguageView_sl_background)
+                background = getDrawable(R.styleable.LanguageView_lv_background)
 
-                styleTitle = getResourceId(R.styleable.SelectLanguageView_sl_titleItemStyle, styleTitle)
-                styleTitleSelected = getResourceId(R.styleable.SelectLanguageView_sl_titleItemStyle_selected, styleTitleSelected)
+                styleTitle = getResourceId(R.styleable.LanguageView_lv_titleItemStyle, styleTitle)
+                styleTitleSelected = getResourceId(R.styleable.LanguageView_lv_titleItemStyle_selected, styleTitleSelected)
 
-                style = getResourceId(R.styleable.SelectLanguageView_sl_itemStyle, style)
-                styleSelected = getResourceId(R.styleable.SelectLanguageView_sl_itemStyle_selected, styleSelected)
+                style = getResourceId(R.styleable.LanguageView_lv_itemStyle, style)
+                styleSelected = getResourceId(R.styleable.LanguageView_lv_itemStyle_selected, styleSelected)
 
-                typeListLanguage = TypeLanguage.fromId(getInt(R.styleable.SelectLanguageView_sl_listLanguage, typeListLanguage.id))
+                typeListLanguage = TypeLanguage.fromId(getInt(R.styleable.LanguageView_lv_listLanguage, typeListLanguage.id))
 
-                gravityAds = GravityAds.fromId(getInt(R.styleable.SelectLanguageView_sl_gravityAds, gravityAds.id))
+                gravityAds = GravityAds.fromId(getInt(R.styleable.LanguageView_lv_gravityAds, gravityAds.id))
 
-                heightItem = getDimensionPixelSize(R.styleable.SelectLanguageView_sl_heightItem, heightItem)
-                sizeFlag = getDimensionPixelSize(R.styleable.SelectLanguageView_sl_sizeFlag, sizeFlag)
+                heightItem = getDimensionPixelSize(R.styleable.LanguageView_lv_heightItem, heightItem)
+                sizeFlag = getDimensionPixelSize(R.styleable.LanguageView_lv_sizeFlag, sizeFlag)
 
-                column = getInt(R.styleable.SelectLanguageView_sl_column, column)
+                column = getInt(R.styleable.LanguageView_lv_column, column)
 
-                positionSelected = getInt(R.styleable.SelectLanguageView_sl_positionSelected, positionSelected)
+                positionSelected = getInt(R.styleable.LanguageView_lv_positionSelected, positionSelected)
 
-                backgroundBottomAction = getDrawable(R.styleable.SelectLanguageView_sl_backgroundBottomAction)
-                colorBottomAction = getColor(R.styleable.SelectLanguageView_sl_colorTitleBottomAction, colorBottomAction)
-                styleBottomAction = getResourceId(R.styleable.SelectLanguageView_sl_bottomActionStyle, styleBottomAction)
-                showBottomAction = getBoolean(R.styleable.SelectLanguageView_sl_canShowBottomAction, showBottomAction)
+                backgroundBottomAction = getDrawable(R.styleable.LanguageView_lv_backgroundBottomAction)
+                colorBottomAction = getColor(R.styleable.LanguageView_lv_colorTitleBottomAction, colorBottomAction)
+                styleBottomAction = getResourceId(R.styleable.LanguageView_lv_bottomActionStyle, styleBottomAction)
+                showBottomAction = getBoolean(R.styleable.LanguageView_lv_canShowBottomAction, showBottomAction)
 
             }
         }
@@ -165,7 +162,7 @@ class SelectLanguageView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the child views and initializes the SelectLanguageView.
+     * Sets up the child views and initializes the LanguageView.
      */
     private fun setupViews() {
         setupConfigDefault()
@@ -238,7 +235,7 @@ class SelectLanguageView @JvmOverloads constructor(
     }
 
     /**
-     * Sets the background drawable for the SelectLanguageView.
+     * Sets the background drawable for the LanguageView.
      *
      * @param background The background drawable to be set.
      */

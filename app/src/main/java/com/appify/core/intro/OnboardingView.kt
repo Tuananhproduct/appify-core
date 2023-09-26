@@ -16,14 +16,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.appify.core.DefaultValues
 import com.appify.core.R
-import com.appify.core.databinding.LayoutIntroBinding
+import com.appify.core.databinding.LayoutOnboardingBinding
 import com.appify.core.gone
 import com.appify.core.setMargins
 import com.appify.core.visible
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 /**
- * IntroView is a custom view for displaying an introduction screen with multiple slides.
+ * OnboardingView is a custom view for displaying an introduction screen with multiple slides.
  *
  * This view provides a customizable introduction screen with multiple slides. It supports
  * customization options for appearance and behavior through XML attributes. The slides are
@@ -32,7 +32,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
  * color. The dots indicator can also be customized with colors and shape.
  *
  * Usage:
- * 1. Include the `IntroView` in your XML layout file.
+ * 1. Include the `OnboardingView` in your XML layout file.
  * 2. Customize the appearance and behavior of the view using the available XML attributes.
  * 3. Set the layout resources for the slides using layoutId1, layoutId2, and layoutId3 attributes.
  * 4. Register a listener for the "Next" button click event using [onFinishListener] if needed.
@@ -49,15 +49,15 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
  * - iv_nextTextColor: Color resource for the text of the "Next" button.
  * - iv_nextStyle: Style resource for the "Next" button.
  * - iv_nextIcon: Drawable resource for the icon of the "Next" button.
- * - iv_background: Background drawable for the IntroView.
+ * - iv_background: Background drawable for the OnboardingView.
  * - iv_dotsColor: Color resource for the dots indicator.
  * - iv_selectedDotsColor: Color resource for the selected dot in the dots indicator.
  * - iv_dotsShape: Shape option for the dots indicator (PILL or CIRCLE).
  * -
  * Example usage in XML:
  * ```
- * <com.example.IntroView
- *     android:id="@+id/introView"
+ * <com.appify.core.intro.OnboardingView
+ *     android:id="@+id/onboarding_view"
  *     android:layout_width="match_parent"
  *     android:layout_height="match_parent"
  *     app:iv_layout_id_1="@layout/intro_slide_1"
@@ -80,13 +80,13 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
  * @param context The context in which the view is created.
  * @param attributeSet The attribute set containing custom attributes.
  */
-class IntroView @JvmOverloads constructor(
+class OnboardingView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null
 ) : FrameLayout(context, attributeSet) {
 
-    private var _binding = LayoutIntroBinding.inflate(LayoutInflater.from(context), this, true)
-    private var introViewPagerAdapter: IntroViewPagerAdapter? = null
+    private var _binding = LayoutOnboardingBinding.inflate(LayoutInflater.from(context), this, true)
+    private var onboardingViewPagerAdapter: OnboardingViewPagerAdapter? = null
 
     @LayoutRes
     private var layoutId1 = View.NO_ID
@@ -94,25 +94,25 @@ class IntroView @JvmOverloads constructor(
     private var layoutId3 = View.NO_ID
 
 
-    private var gravityActionNormal = 0
-    private var gravityActionIcon = 0
-    private var gravityActionCorner = 0
-    private var gravityActionCenter = 0
+    private var gravityActionNormal = DefaultValues.EMPTY_VALUE
+    private var gravityActionIcon = DefaultValues.EMPTY_VALUE
+    private var gravityActionCorner = DefaultValues.EMPTY_VALUE
+    private var gravityActionCenter = DefaultValues.EMPTY_VALUE
 
-    private var gravityAds = 0
+    private var gravityAds = DefaultValues.EMPTY_VALUE
 
     private var backgroundNext: Drawable? = null
     private var background: Drawable? = null
 
-    private var colorTextNext = 0
-    private var styleNext = 0
+    private var colorTextNext = DefaultValues.EMPTY_VALUE
+    private var styleNext = DefaultValues.EMPTY_VALUE
 
     @DrawableRes
-    private var iconNext = 0
+    private var iconNext = DefaultValues.EMPTY_VALUE
 
     @ColorInt
-    private var dotsColor = 0
-    private var selectedDotsColor = 0
+    private var dotsColor = DefaultValues.EMPTY_VALUE
+    private var selectedDotsColor = DefaultValues.EMPTY_VALUE
 
     private var dotsShape = DotsShape.CIRCLE.id
 
@@ -121,30 +121,30 @@ class IntroView @JvmOverloads constructor(
     init {
         requireActivity()
         attributeSet?.let { attrs ->
-            context.theme.obtainStyledAttributes(attrs, R.styleable.IntroView, 0, 0).apply {
+            context.theme.obtainStyledAttributes(attrs, R.styleable.OnboardingView, 0, 0).apply {
                 try {
-                    layoutId1 = getResourceId(R.styleable.IntroView_iv_layout_id_1, View.NO_ID)
-                    layoutId2 = getResourceId(R.styleable.IntroView_iv_layout_id_2, View.NO_ID)
-                    layoutId3 = getResourceId(R.styleable.IntroView_iv_layout_id_3, View.NO_ID)
+                    layoutId1 = getResourceId(R.styleable.OnboardingView_iv_layout_id_1, View.NO_ID)
+                    layoutId2 = getResourceId(R.styleable.OnboardingView_iv_layout_id_2, View.NO_ID)
+                    layoutId3 = getResourceId(R.styleable.OnboardingView_iv_layout_id_3, View.NO_ID)
 
-                    gravityActionCorner = getInt(R.styleable.IntroView_iv_gravityAction_corner, 0)
-                    gravityActionNormal = getInt(R.styleable.IntroView_iv_gravityAction_normal, 0)
-                    gravityActionIcon = getInt(R.styleable.IntroView_iv_gravityAction_icon, 0)
-                    gravityActionCenter = getInt(R.styleable.IntroView_iv_gravityAction_center, 0)
+                    gravityActionCorner = getInt(R.styleable.OnboardingView_iv_gravityAction_corner, DefaultValues.EMPTY_VALUE)
+                    gravityActionNormal = getInt(R.styleable.OnboardingView_iv_gravityAction_normal, DefaultValues.EMPTY_VALUE)
+                    gravityActionIcon = getInt(R.styleable.OnboardingView_iv_gravityAction_icon, DefaultValues.EMPTY_VALUE)
+                    gravityActionCenter = getInt(R.styleable.OnboardingView_iv_gravityAction_center, DefaultValues.EMPTY_VALUE)
 
-                    gravityAds = getInt(R.styleable.IntroView_iv_gravityAds, 0)
+                    gravityAds = getInt(R.styleable.OnboardingView_iv_gravityAds, DefaultValues.EMPTY_VALUE)
 
-                    backgroundNext = getDrawable(R.styleable.IntroView_iv_backgroundNext)
-                    colorTextNext = getInt(R.styleable.IntroView_iv_nextTextColor, colorTextNext)
-                    styleNext = getResourceId(R.styleable.IntroView_iv_nextStyle, styleNext)
-                    iconNext = getResourceId(R.styleable.IntroView_iv_nextIcon, iconNext)
+                    backgroundNext = getDrawable(R.styleable.OnboardingView_iv_backgroundNext)
+                    colorTextNext = getInt(R.styleable.OnboardingView_iv_nextTextColor, colorTextNext)
+                    styleNext = getResourceId(R.styleable.OnboardingView_iv_nextStyle, styleNext)
+                    iconNext = getResourceId(R.styleable.OnboardingView_iv_nextIcon, iconNext)
 
-                    background = getDrawable(R.styleable.IntroView_iv_background)
+                    background = getDrawable(R.styleable.OnboardingView_iv_background)
 
-                    dotsColor = getColor(R.styleable.IntroView_iv_dotsColor, dotsColor)
-                    selectedDotsColor = getColor(R.styleable.IntroView_iv_selectedDotsColor, selectedDotsColor)
+                    dotsColor = getColor(R.styleable.OnboardingView_iv_dotsColor, dotsColor)
+                    selectedDotsColor = getColor(R.styleable.OnboardingView_iv_selectedDotsColor, selectedDotsColor)
 
-                    dotsShape = getInt(R.styleable.IntroView_iv_dotsShape, dotsShape)
+                    dotsShape = getInt(R.styleable.OnboardingView_iv_dotsShape, dotsShape)
 
 
                 } finally {
@@ -197,25 +197,25 @@ class IntroView @JvmOverloads constructor(
      * Sets up the ViewPager and its associated components.
      */
     private fun setupViewPager() {
-        if (introViewPagerAdapter == null) {
-            introViewPagerAdapter = IntroViewPagerAdapter(requireActivity())
+        if (onboardingViewPagerAdapter == null) {
+            onboardingViewPagerAdapter = OnboardingViewPagerAdapter(requireActivity())
         }
 
         _binding.vgIntro.apply {
-            adapter = introViewPagerAdapter
-//            _binding.indicatorBottom.attachTo(this)
-//            _binding.indicatorTop.attachTo(this)
-//            _binding.indicatorCenter.attachTo(this)
+            adapter = onboardingViewPagerAdapter
+            _binding.indicatorBottom.attachTo(this)
+            _binding.indicatorTop.attachTo(this)
+            _binding.indicatorCenter.attachTo(this)
         }
 
-        introViewPagerAdapter?.submitList(getListFragment())
+        onboardingViewPagerAdapter?.submitList(getListFragment())
     }
 
     /**
      * Sets up the style for the "Next" text based on the provided style resource.
      */
     private fun setupStyleNext() {
-        if (styleNext != 0) {
+        if (styleNext != DefaultValues.EMPTY_VALUE) {
             _binding.txtNextBottom.setTextAppearance(styleNext)
             _binding.txtNextTop.setTextAppearance(styleNext)
             _binding.btnNextCenter.setTextAppearance(styleNext)
@@ -245,23 +245,23 @@ class IntroView @JvmOverloads constructor(
      * Sets up the default configuration values if they are not provided.
      */
     private fun setupConfigDefault() {
-        if (dotsColor == 0) {
+        if (dotsColor == DefaultValues.EMPTY_VALUE) {
             dotsColor = ContextCompat.getColor(context, R.color.dots_color)
         }
 
-        if (selectedDotsColor == 0) {
+        if (selectedDotsColor == DefaultValues.EMPTY_VALUE) {
             selectedDotsColor = ContextCompat.getColor(context, R.color.blue)
         }
 
-        if (iconNext == 0) {
+        if (iconNext == DefaultValues.EMPTY_VALUE) {
             iconNext = R.drawable.ic_next
         }
 
-        if (colorTextNext == 0) {
+        if (colorTextNext == DefaultValues.EMPTY_VALUE) {
             colorTextNext = ContextCompat.getColor(context, R.color.black)
         }
 
-        if (styleNext == 0) {
+        if (styleNext == DefaultValues.EMPTY_VALUE) {
             styleNext = R.style.Intro_Button_Next
         }
     }
@@ -272,34 +272,34 @@ class IntroView @JvmOverloads constructor(
     private fun setupDotsShape() {
         when (dotsShape) {
             DotsShape.PILL.id -> {
-//                _binding.indicatorBottom.setWithFactor(DefaultValues.PILL)
-////                _binding.indicatorTop.setWithFactor(DefaultValues.PILL)
-//                _binding.indicatorCenter.setWithFactor(DefaultValues.PILL)
+                _binding.indicatorBottom.setWithFactor(DefaultValues.PILL)
+                _binding.indicatorTop.setWithFactor(DefaultValues.PILL)
+                _binding.indicatorCenter.setWithFactor(DefaultValues.PILL)
             }
 
             DotsShape.CIRCLE.id -> {
-//                _binding.indicatorBottom.setWithFactor(DefaultValues.CIRCLE)
-//                _binding.indicatorTop.setWithFactor(DefaultValues.CIRCLE)
-//                _binding.indicatorCenter.setWithFactor(DefaultValues.CIRCLE)
+                _binding.indicatorBottom.setWithFactor(DefaultValues.CIRCLE)
+                _binding.indicatorTop.setWithFactor(DefaultValues.CIRCLE)
+                _binding.indicatorCenter.setWithFactor(DefaultValues.CIRCLE)
             }
         }
     }
 
     /**
-     * Sets up the color of the dots indicator based on the provided dotsColor and selectedDotsColor values.
+     * Sets up the color of the dots indicator based on the provided dotsColor and [selectedDotsColor] values.
      */
     private fun setupDotsColor() {
-//        _binding.indicatorCenter.dotsColor = dotsColor
-//        _binding.indicatorBottom.dotsColor = dotsColor
-//        _binding.indicatorTop.dotsColor = dotsColor
-//
-//        _binding.indicatorCenter.selectedDotColor = selectedDotsColor
-//        _binding.indicatorBottom.selectedDotColor = selectedDotsColor
-//        _binding.indicatorTop.selectedDotColor = selectedDotsColor
+        _binding.indicatorCenter.dotsColor = dotsColor
+        _binding.indicatorBottom.dotsColor = dotsColor
+        _binding.indicatorTop.dotsColor = dotsColor
+
+        _binding.indicatorCenter.selectedDotColor = selectedDotsColor
+        _binding.indicatorBottom.selectedDotColor = selectedDotsColor
+        _binding.indicatorTop.selectedDotColor = selectedDotsColor
     }
 
     /**
-     * Sets up the icon for the "Next" button based on the provided iconNext drawable resource.
+     * Sets up the icon for the "Next" button based on the provided [iconNext] drawable resource.
      */
     private fun setupIconNext() {
         _binding.imgNextBottom.setImageResource(iconNext)
@@ -307,7 +307,7 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Creates a list of fragments based on the provided layoutId1, layoutId2, and layoutId3 values.
+     * Creates a list of fragments based on the provided [layoutId1], [layoutId2], and [layoutId3] values.
      *
      * @return The list of fragments.
      */
@@ -318,8 +318,8 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity actions for the view based on the provided gravityAds, gravityActionNormal,
-     * gravityActionCenter, gravityActionCorner, and gravityActionIcon values.
+     * Sets up the gravity actions for the view based on the provided [gravityAds], [gravityActionNormal],
+     * [gravityActionCenter], [gravityActionCorner], and [gravityActionIcon] values.
      */
     private fun setupGravityAction() {
         setupGravityAds()
@@ -330,12 +330,12 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Returns the view for displaying ads based on the gravityAds value.
+     * Returns the view for displaying ads based on the [gravityAds] value.
      *
      * @return The FrameLayout containing the ads view.
      */
     private fun getViewAds(): FrameLayout {
-        if (gravityAds != 0) {
+        if (gravityAds != DefaultValues.EMPTY_VALUE) {
             when (gravityAds) {
                 GravityAds.BOTTOM.id -> {
                     _binding.viewAdsBottom.visible()
@@ -346,7 +346,7 @@ class IntroView @JvmOverloads constructor(
 
                 GravityAds.MIDDLE.id -> {
                     _binding.viewAdsBottom.gone()
-                    return if (gravityActionCenter != 0) {
+                    return if (gravityActionCenter != DefaultValues.EMPTY_VALUE) {
                         _binding.viewAdsMiddleCenter.visible()
                         _binding.viewAdsMiddle.gone()
                         _binding.viewAdsMiddleCenter
@@ -362,10 +362,10 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity action for the "Next" button when gravityActionNormal is selected.
+     * Sets up the gravity action for the "Next" button when [gravityActionNormal] is selected.
      */
     private fun setupGravityActionNormal() {
-        if (gravityActionNormal != 0) {
+        if (gravityActionNormal != DefaultValues.EMPTY_VALUE) {
             when (gravityActionNormal) {
                 GravityAction.BOTTOM.id -> {
                     _binding.viewActionBottom.visible()
@@ -398,10 +398,10 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity action for displaying ads when gravityAds is selected.
+     * Sets up the gravity action for displaying ads when [gravityAds] is selected.
      */
     private fun setupGravityAds() {
-        if (gravityAds != 0) {
+        if (gravityAds != DefaultValues.EMPTY_VALUE) {
             when (gravityAds) {
                 GravityAds.BOTTOM.id -> {
                     viewAds = _binding.viewAdsBottom
@@ -421,10 +421,10 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity action for the "Next" button when gravityActionCenter is selected.
+     * Sets up the gravity action for the "Next" button when [gravityActionCenter] is selected.
      */
     private fun setupGravityActionCenter() {
-        if (gravityActionCenter != 0) {
+        if (gravityActionCenter != DefaultValues.EMPTY_VALUE) {
             _binding.btnNextCenter.setTextSizeSmall()
 
             _binding.viewActionBottom.gone()
@@ -434,10 +434,10 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity action for the "Next" button when gravityActionCorner is selected.
+     * Sets up the gravity action for the "Next" button when [gravityActionCorner] is selected.
      */
     private fun setupGravityActionCorner() {
-        if (gravityActionCorner != 0) {
+        if (gravityActionCorner != DefaultValues.EMPTY_VALUE) {
             _binding.txtNextBottom.setTextSizeSmall()
             _binding.txtNextTop.setTextSizeSmall()
 
@@ -462,10 +462,10 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets up the gravity action for the "Next" button when gravityActionIcon is selected.
+     * Sets up the gravity action for the "Next" button when [gravityActionIcon] is selected.
      */
     private fun setupGravityActionIcon() {
-        if (gravityActionIcon != 0) {
+        if (gravityActionIcon != DefaultValues.EMPTY_VALUE) {
             when (gravityActionIcon) {
                 GravityAction.BOTTOM.id -> {
                     _binding.imgNextBottom.visible()
@@ -489,7 +489,7 @@ class IntroView @JvmOverloads constructor(
     }
 
     /**
-     * Sets the click listener for the "Next" button to perform the onNext action.
+     * Sets the click listener for the "Next" button to perform the [onNext] action.
      *
      * @param onNext The action to be performed when the "Next" button is clicked.
      */

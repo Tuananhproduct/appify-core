@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class IntroViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+class OnboardingViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
     private val listFragment: MutableList<Fragment> = mutableListOf()
 
